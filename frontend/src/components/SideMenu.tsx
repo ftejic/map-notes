@@ -12,6 +12,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
+import { motion } from "framer-motion";
 
 function SideMenu() {
   const { logout } = useAuth0();
@@ -27,14 +28,19 @@ function SideMenu() {
         </p>
       </div>
       <div className="flex flex-col gap-2 px-2 py-4">
-        <div className="p-2 rounded-md cursor-pointer hover:bg-accent ">
-          <div className="hidden md:flex gap-2">
+        <div className="cursor-pointer hover:bg-accent rounded-md">
+          <motion.div
+            className="hidden md:flex w-full gap-2 p-2"
+            whileHover={{ x: 3 }}
+            whileTap={{ x: 6 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
             <MapIcon className="text-foreground" />
             <p>Travel Map</p>
-          </div>
+          </motion.div>
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger className="block md:hidden">
+              <TooltipTrigger className="block md:hidden p-2">
                 <MapIcon className="text-foreground" />
               </TooltipTrigger>
               <TooltipContent>
@@ -43,14 +49,19 @@ function SideMenu() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <div className="p-2 rounded-md cursor-pointer hover:bg-accent ">
-          <div className="hidden md:flex gap-2">
+        <div className="cursor-pointer hover:bg-accent rounded-md">
+          <motion.div
+            className="hidden md:flex w-full gap-2 p-2"
+            whileHover={{ x: 3 }}
+            whileTap={{ x: 6 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
             <MapPinIcon className="text-foreground" />
             <p>Visited Places</p>
-          </div>
+          </motion.div>
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger className="block md:hidden">
+              <TooltipTrigger className="block md:hidden p-2">
                 <MapPinIcon className="text-foreground" />
               </TooltipTrigger>
               <TooltipContent>
@@ -59,14 +70,19 @@ function SideMenu() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <div className="p-2 rounded-md cursor-pointer hover:bg-accent ">
-          <div className="hidden md:flex gap-2">
+        <div className="cursor-pointer hover:bg-accent rounded-md">
+          <motion.div
+            className="hidden md:flex w-full gap-2 p-2"
+            whileHover={{ x: 3 }}
+            whileTap={{ x: 6 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
             <PencilLineIcon className="text-foreground" />
             <p>Add Entry</p>
-          </div>
+          </motion.div>
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger className="block md:hidden">
+              <TooltipTrigger className="block md:hidden p-2">
                 <PencilLineIcon className="text-foreground" />
               </TooltipTrigger>
               <TooltipContent>
@@ -75,14 +91,19 @@ function SideMenu() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <div className="p-2 rounded-md cursor-pointer hover:bg-accent ">
-          <div className="hidden md:flex gap-2">
+        <div className="cursor-pointer hover:bg-accent rounded-md">
+          <motion.div
+            className="hidden md:flex w-full gap-2 p-2"
+            whileHover={{ x: 3 }}
+            whileTap={{ x: 6 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
             <Settings className="text-foreground" />
             <p>Settings</p>
-          </div>
+          </motion.div>
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger className="block md:hidden">
+              <TooltipTrigger className="block md:hidden p-2">
                 <Settings className="text-foreground" />
               </TooltipTrigger>
               <TooltipContent>
@@ -96,15 +117,20 @@ function SideMenu() {
         onClick={() =>
           logout({ logoutParams: { returnTo: window.location.origin } })
         }
-        className="mt-auto p-4 border-t-2 cursor-pointer hover:bg-accent"
+        className="mt-auto border-t-2 cursor-pointer hover:bg-accent"
       >
-        <div className="hidden md:flex gap-2">
+        <motion.div
+          className="hidden md:flex w-full gap-2 p-4"
+          whileHover={{ x: 5 }}
+          whileTap={{ x: 10 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
           <LogOutIcon className="text-foreground" />
           <p>Log Out</p>
-        </div>
+        </motion.div>
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger className="block md:hidden">
+            <TooltipTrigger className="block md:hidden p-4">
               <LogOutIcon className="text-foreground" />
             </TooltipTrigger>
             <TooltipContent>
