@@ -18,7 +18,7 @@ function SideMenu() {
   const { logout } = useAuth0();
 
   return (
-    <div className="hidden sm:flex flex-col h-screen w-fit md:w-56 lg:w-72 border-r-2">
+    <div className="hidden sm:flex flex-col fixed min-h-screen w-fit md:w-1/4 lg:w-1/5 border-r-2">
       <div className="p-4 border-b-2">
         <p className="hidden md:block font-anton-regular text-2xl text-primary">
           MapNotes
@@ -121,8 +121,8 @@ function SideMenu() {
       >
         <motion.div
           className="hidden md:flex w-full gap-2 p-4"
-          whileHover={{ x: 5 }}
-          whileTap={{ x: 10 }}
+          whileHover={{ x: 3 }}
+          whileTap={{ x: 6 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
           <LogOutIcon className="text-foreground" />
