@@ -11,7 +11,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from "../ui/tooltip";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -54,7 +54,7 @@ function SideMenu() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <div className="cursor-pointer hover:bg-accent rounded-md">
+        <div className="cursor-pointer hover:bg-accent hover:text-accent-foreground rounded-md">
           <motion.div
             className="hidden md:flex w-full"
             whileHover={{ x: 3 }}
@@ -79,7 +79,7 @@ function SideMenu() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <div className="cursor-pointer hover:bg-accent rounded-md">
+        <div className="cursor-pointer hover:bg-accent hover:text-accent-foreground rounded-md">
           <motion.div
             className="hidden md:flex w-full"
             whileHover={{ x: 3 }}
@@ -104,7 +104,7 @@ function SideMenu() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <div className="cursor-pointer hover:bg-accent rounded-md">
+        <div className="cursor-pointer hover:bg-accent hover:text-accent-foreground rounded-md">
           <motion.div
             className="hidden md:flex w-full"
             whileHover={{ x: 3 }}
@@ -134,7 +134,7 @@ function SideMenu() {
         onClick={() =>
           logout({ logoutParams: { returnTo: window.location.origin } })
         }
-        className="mt-auto border-t-2 cursor-pointer hover:bg-accent"
+        className="mt-auto border-t-2 cursor-pointer hover:bg-accent hover:text-accent-foreground"
       >
         <motion.div
           className="hidden md:flex w-full gap-2 p-4"

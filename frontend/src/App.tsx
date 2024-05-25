@@ -1,8 +1,8 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Route, Routes } from "react-router-dom";
 import TravelMap from "./components/TravelMap/TravelMap";
-import SideMenu from "./components/SideMenu";
-import MobileMenu from "./components/MobileMenu";
+import SideMenu from "./components/Menus/SideMenu";
+import MobileMenu from "./components/Menus/MobileMenu";
 import VisitedPlaces from "./components/VisitedPlaces/VisitedPlaces";
 import AddEntry from "./components/AddEntry/AddEntry";
 import Settings from "./components/Settings/Settings";
