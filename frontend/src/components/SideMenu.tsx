@@ -13,6 +13,7 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 function SideMenu() {
   const { logout } = useAuth0();
@@ -30,18 +31,22 @@ function SideMenu() {
       <div className="flex flex-col gap-2 px-2 py-4">
         <div className="cursor-pointer hover:bg-accent rounded-md">
           <motion.div
-            className="hidden md:flex w-full gap-2 p-2"
+            className="hidden md:flex w-full "
             whileHover={{ x: 3 }}
             whileTap={{ x: 6 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <MapIcon className="text-foreground" />
-            <p>Travel Map</p>
+            <Link to="/" className="flex w-full h-full gap-2 p-2">
+              <MapIcon className="text-foreground" />
+              <p>Travel Map</p>
+            </Link>
           </motion.div>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger className="block md:hidden p-2">
-                <MapIcon className="text-foreground" />
+                <Link to="/">
+                  <MapIcon className="text-foreground" />
+                </Link>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Travel Map</p>
@@ -51,18 +56,22 @@ function SideMenu() {
         </div>
         <div className="cursor-pointer hover:bg-accent rounded-md">
           <motion.div
-            className="hidden md:flex w-full gap-2 p-2"
+            className="hidden md:flex w-full"
             whileHover={{ x: 3 }}
             whileTap={{ x: 6 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <MapPinIcon className="text-foreground" />
-            <p>Visited Places</p>
+            <Link to="/places" className="flex w-full h-full gap-2 p-2">
+              <MapPinIcon className="text-foreground" />
+              <p>Visited Places</p>
+            </Link>
           </motion.div>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger className="block md:hidden p-2">
-                <MapPinIcon className="text-foreground" />
+                <Link to="/places">
+                  <MapPinIcon className="text-foreground" />
+                </Link>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Visited Places</p>
@@ -72,18 +81,22 @@ function SideMenu() {
         </div>
         <div className="cursor-pointer hover:bg-accent rounded-md">
           <motion.div
-            className="hidden md:flex w-full gap-2 p-2"
+            className="hidden md:flex w-full"
             whileHover={{ x: 3 }}
             whileTap={{ x: 6 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <PencilLineIcon className="text-foreground" />
-            <p>Add Entry</p>
+            <Link to="/add" className="flex w-full h-full gap-2 p-2">
+              <PencilLineIcon className="text-foreground" />
+              <p>Add Entry</p>
+            </Link>
           </motion.div>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger className="block md:hidden p-2">
-                <PencilLineIcon className="text-foreground" />
+                <Link to="/add">
+                  <PencilLineIcon className="text-foreground" />
+                </Link>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Add Entry</p>
@@ -93,18 +106,22 @@ function SideMenu() {
         </div>
         <div className="cursor-pointer hover:bg-accent rounded-md">
           <motion.div
-            className="hidden md:flex w-full gap-2 p-2"
+            className="hidden md:flex w-full"
             whileHover={{ x: 3 }}
             whileTap={{ x: 6 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <Settings className="text-foreground" />
-            <p>Settings</p>
+            <Link to="/settings" className="flex w-full h-full gap-2 p-2">
+              <Settings className="text-foreground" />
+              <p>Settings</p>
+            </Link>
           </motion.div>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger className="block md:hidden p-2">
-                <Settings className="text-foreground" />
+                <Link to="/settings">
+                  <Settings className="text-foreground" />
+                </Link>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Settings</p>
