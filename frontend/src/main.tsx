@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           redirect_uri: window.location.origin,
         }}
       >
-        <ThemeProvider defaultTheme="dark" storageKey="mapnotes-ui-theme">
+        <ThemeProvider defaultTheme="light" storageKey="mapnotes-ui-theme">
           <App />
         </ThemeProvider>
       </Auth0Provider>
