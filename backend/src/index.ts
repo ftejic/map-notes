@@ -6,24 +6,38 @@ import connectToDB from "./config/db";
 
 dotenv.config();
 
-const app = express();
+async function startServer(): Promise<void> {
+    try {
+        await connectToDB();
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-  })
-);
+        const app = express();
 
-app.use("/api/account", accountRoutes)
+        app.use(
+            cors({
+                origin: "http://localhost:3000",
+            })
+        );
 
-connectToDB();
+        app.use("/api/account", accountRoutes);
 
-const PORT = process.env.PORT;
+        const PORT = process.env.PORT;
 
-app.get("/", (request, response) => {
-    response.send("Hello Word!");
-})
+        app.get("/", (request, response) => {
+            response.send("Hello Word!");
+        });
 
-app.listen(PORT, () => {
-  console.log(`Running on port ${PORT}`);
-});
+        app.listen(PORT, () => {
+            console.log(`Running on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error("Failed to start server", error);
+    }
+}
+
+(async () => {
+    try {
+        await startServer();
+    } catch (error) {
+        console.error("An error occurred while starting the server:", error);
+    }
+})();
