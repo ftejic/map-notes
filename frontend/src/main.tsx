@@ -1,25 +1,46 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import "./index.css";
-import { Auth0Provider } from "@auth0/auth0-react";
-import { BrowserRouter } from "react-router-dom";
-import { ThemeProvider } from "./context/ThemeProvider.tsx";
+import {
+    createBrowserRouter,
+    RouterProvider,
+} from "react-router-dom";
+import {ThemeProvider} from "@/context/ThemeProvider.tsx";
+import VisitedPlaces from "@/components/VisitedPlaces/VisitedPlaces.tsx";
+import AddEntry from "@/components/AddEntry/AddEntry.tsx";
+import Settings from "@/components/Settings/Settings.tsx";
+import Root from "@/routes/Root.tsx";
+import TravelMap from "@/components/TravelMap/TravelMap.tsx";
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Root/>,
+        children: [
+            {
+              index: true,
+              element: <TravelMap />,
+            },
+            {
+                path:"/places",
+                element: <VisitedPlaces/>
+            },
+            {
+                path: "/add",
+                element: <AddEntry/>
+            },
+            {
+                path: "/settings",
+                element: <Settings/>
+            }
+        ]
+    }
+]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <BrowserRouter>
     <React.StrictMode>
-      <Auth0Provider
-        domain="map-notes.eu.auth0.com"
-        clientId="gpp1MDbNuMFrzZMGnYZlPWWfxhvWoqB7"
-        authorizationParams={{
-          redirect_uri: window.location.origin,
-        }}
-      >
         <ThemeProvider defaultTheme="light" storageKey="mapnotes-ui-theme">
-          <App />
+            <RouterProvider router={router}/>
         </ThemeProvider>
-      </Auth0Provider>
     </React.StrictMode>
-  </BrowserRouter>
 );
