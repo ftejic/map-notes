@@ -13,8 +13,16 @@ import {
 } from "../ui/tooltip";
 import {motion} from "framer-motion";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {logOut} from "@/redux/authSlice.ts";
+import {AppDispatch} from "@/redux/store.ts";
 
 function SideMenu() {
+    const dispatch: AppDispatch = useDispatch();
+
+    const handleLogOot = () => {
+        dispatch(logOut());
+    };
 
     return (
         <div className="hidden sm:flex flex-col fixed min-h-screen w-fit md:w-1/4 lg:w-1/5 border-r-2">
@@ -134,13 +142,14 @@ function SideMenu() {
                     whileHover={{x: 3}}
                     whileTap={{x: 6}}
                     transition={{type: "spring", stiffness: 300}}
+                    onClick={handleLogOot}
                 >
                     <LogOutIcon className="text-foreground"/>
                     <p>Log Out</p>
                 </motion.div>
                 <TooltipProvider>
                     <Tooltip>
-                        <TooltipTrigger className="block md:hidden p-4">
+                        <TooltipTrigger className="block md:hidden p-4" onClick={handleLogOot}>
                             <LogOutIcon className="text-foreground"/>
                         </TooltipTrigger>
                         <TooltipContent>
