@@ -7,7 +7,7 @@ function VisitedPlaces() {
     const [searchValue, setSearchValue] = useState("");
 
     return (
-        <div className="md:grid md:grid-cols-4 lg:grid-cols-5 h-[calc(100vh-81px)] sm:h-full max-h-screen">
+        <div className="md:grid md:grid-cols-4 lg:grid-cols-5 sm:h-full max-h-screen">
             <div className="sm:ml-14 md:ml-0 md:col-start-2 md:col-end-5 lg:col-start-2 lg:col-end-6">
                 <div className="flex flex-col items-center p-4 gap-4">
                     <h1 className="text-center text-2xl font-bold">Visited Places</h1>

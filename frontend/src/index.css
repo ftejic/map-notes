@@ -73,3 +73,47 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.tiptap {
+  outline: none;
+  border: none;
+  padding: 16px;
+}
+
+.editor ul {
+  list-style: circle;
+  padding-left: 40px;
+}
+
+.editor ol {
+  list-style: decimal;
+  padding-left: 40px;
+}
+
+.editor p {
+  font-size: 16px;
+}
+
+.editor h1 {
+  font-size: 40px;
+}
+
+.editor h2 {
+  font-size: 32px;
+}
+
+.editor h3 {
+  font-size: 28px;
+}
+
+.editor h4 {
+  font-size: 24px;
+}
+
+.editor h5 {
+  font-size: 20px;
+}
+
+.editor h6 {
+  font-size: 18px;
+}

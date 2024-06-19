@@ -6,7 +6,7 @@ function MobileMenu() {
   const location = useLocation();
 
   return (
-    <div className="flex sm:hidden fixed w-full bottom-0 border-t-2">
+    <div className="flex sm:hidden absolute w-full bottom-0 border-t-2 bg-background">
       <motion.div
         whileTap={{ y: -3 }}
         transition={{ type: "spring", stiffness: 300 }}

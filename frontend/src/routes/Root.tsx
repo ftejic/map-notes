@@ -12,11 +12,11 @@ function Root() {
   }
 
   return (
-    <>
+    <div className="max-w-screen-2xl min-h-screen flex flex-col relative left-1/2 -translate-x-1/2">
       <SideMenu />
       <MobileMenu />
       <Outlet />
-    </>
+    </div>
   );
 }
 
