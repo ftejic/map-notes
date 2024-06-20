@@ -5,6 +5,7 @@ import cors from "cors";
 import connectToDB from "./config/db";
 import decodeToken from "./middleware/authenticate";
 import { createServer } from "http";
+import placesRoutes from "./routes/placesRoutes";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ async function startServer(): Promise<void> {
     app.use(decodeToken);
 
     app.use("/api/account", accountRoutes);
+    app.use("/api/places", placesRoutes);
 
     const PORT = process.env.PORT || 5000;
 

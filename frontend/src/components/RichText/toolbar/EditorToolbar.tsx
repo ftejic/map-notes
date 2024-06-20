@@ -9,7 +9,7 @@ interface EditorToolbarProps {
 
 function EditorToolbar({ editor }: EditorToolbarProps) {
   return (
-    <div className="flex flex-col gap-1 min-[425px]:flex-row p-2 border-b">
+    <div className="flex flex-col gap-1 min-[450px]:flex-row p-2 border-b">
       <div className="flex gap-1">
         <Toggle
           size="sm"

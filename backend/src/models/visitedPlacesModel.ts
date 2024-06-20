@@ -1,11 +1,7 @@
 import mongoose from "mongoose";
 
 const visitedPlacesSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
+  userUID: { type: String, required: true },
   placeName: { type: String, required: true },
   arrivalDate: { type: Date, required: true },
   departureDate: { type: Date, required: true },
@@ -14,9 +10,10 @@ const visitedPlacesSchema = new mongoose.Schema({
     prices: { type: Number, required: true },
     attractions: { type: Number, required: true },
     nightlife: { type: Number, required: true },
-    overal: { type: Number, required: true },
+    overall: { type: Number, required: true },
   },
-  desc: { type: String, required: true },
+  notes: { type: String, required: true },
+  images: { type: [String], required: false, default: [] },
 });
 
 const VisitedPlaces = mongoose.model("VisitedPlaces", visitedPlacesSchema);

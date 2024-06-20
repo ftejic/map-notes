@@ -1,50 +1,54 @@
 import { Rating } from "../ui/rating";
 
 interface RatingsProps {
-  foodRate: number;
-  setFoodRate: (value: number) => void;
-  pricesRate: number;
-  setPricesRate: (value: number) => void;
-  attractionsRate: number;
-  setAttractionsRate: (value: number) => void;
-  nightlifeRate: number;
-  setNightlifeRate: (value: number) => void;
+  foodRating: number;
+  setFoodRating: (value: number) => void;
+  pricesRating: number;
+  setPricesRating: (value: number) => void;
+  attractionsRating: number;
+  setAttractionsRating: (value: number) => void;
+  nightlifeRating: number;
+  setNightlifeRating: (value: number) => void;
 }
 
 function Ratings({
-  foodRate,
-  setFoodRate,
-  pricesRate,
-  setPricesRate,
-  attractionsRate,
-  setAttractionsRate,
-  nightlifeRate,
-  setNightlifeRate,
+  foodRating,
+  setFoodRating,
+  pricesRating,
+  setPricesRating,
+  attractionsRating,
+  setAttractionsRating,
+  nightlifeRating,
+  setNightlifeRating,
 }: RatingsProps) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-base">
       <div className="flex items-center justify-between gap-4 border-2 rounded-md py-2 px-3">
         <p>Food</p>
-        <Rating rating={foodRate} size={35} onRatingChange={setFoodRate} />
+        <Rating rating={foodRating} size={35} onRatingChange={setFoodRating} />
       </div>
       <div className="flex items-center justify-between gap-4 border-2 rounded-md py-2 px-3">
         <p>Prices</p>
-        <Rating rating={pricesRate} size={35} onRatingChange={setPricesRate} />
+        <Rating
+          rating={pricesRating}
+          size={35}
+          onRatingChange={setPricesRating}
+        />
       </div>
       <div className="flex items-center justify-between gap-4 border-2 rounded-md py-2 px-3">
         <p>Attractions</p>
         <Rating
-          rating={attractionsRate}
+          rating={attractionsRating}
           size={35}
-          onRatingChange={setAttractionsRate}
+          onRatingChange={setAttractionsRating}
         />
       </div>
       <div className="flex items-center justify-between gap-4 border-2 rounded-md py-2 px-3">
         <p>Nightlife</p>
         <Rating
-          rating={nightlifeRate}
+          rating={nightlifeRating}
           size={35}
-          onRatingChange={setNightlifeRate}
+          onRatingChange={setNightlifeRating}
         />
       </div>
     </div>

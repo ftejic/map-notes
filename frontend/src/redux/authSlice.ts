@@ -125,7 +125,6 @@ export const signInWithGoogle = createAsyncThunk<
   }
 });
 
-
 export const initializeAuth = createAsyncThunk<
   { user: FirebaseUser | null; token: string | null },
   void,
