@@ -1,7 +1,6 @@
-import React, { useState } from "react"
-import { Star } from "lucide-react"
-
-import { cn } from "@/lib/utils"
+import React from "react";
+import { Star } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const ratingVariants = {
   default: {
@@ -16,16 +15,16 @@ const ratingVariants = {
     star: "text-yellow-500",
     emptyStar: "text-yellow-200",
   },
-}
+};
 
 interface RatingsProps extends React.HTMLAttributes<HTMLDivElement> {
-  rating: number
-  totalStars?: number
-  size?: number
-  fill?: boolean
-  Icon?: React.ReactElement
-  variant?: keyof typeof ratingVariants
-  onRatingChange?: (rating: number) => void
+  rating: number;
+  totalStars?: number;
+  size?: number;
+  fill?: boolean;
+  Icon?: React.ReactElement;
+  variant?: keyof typeof ratingVariants;
+  onRatingChange?: (rating: number) => void;
 }
 
 export const Rating = ({
@@ -38,23 +37,17 @@ export const Rating = ({
   onRatingChange,
   ...props
 }: RatingsProps) => {
-  const [currentRating, setCurrentRating] = useState(initialRating)
-
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const starIndex = parseInt(
       (event.currentTarget as HTMLDivElement).dataset.starIndex || "0"
-    )
-    setCurrentRating(starIndex)
-    onRatingChange?.(starIndex)
-  }
+    );
+    onRatingChange?.(starIndex);
+  };
 
-  const fullStars = Math.floor(currentRating)
+  const fullStars = Math.floor(initialRating);
 
   return (
-    <div
-      className={cn("flex w-fit items-center gap-2 ")}
-      {...props}
-    >
+    <div className={cn("flex w-fit items-center gap-2")} {...props}>
       <div className="flex items-center cursor-pointer">
         {[...Array(fullStars)].map((_, i) =>
           React.cloneElement(Icon, {
@@ -68,9 +61,7 @@ export const Rating = ({
             "data-star-index": i + 1,
           })
         )}
-        {[
-          ...Array(Math.max(0, totalStars - fullStars)),
-        ].map((_, i) =>
+        {[...Array(Math.max(0, totalStars - fullStars))].map((_, i) =>
           React.cloneElement(Icon, {
             key: i + fullStars + 1,
             size,
@@ -81,5 +72,5 @@ export const Rating = ({
         )}
       </div>
     </div>
-  )
-}
+  );
+};

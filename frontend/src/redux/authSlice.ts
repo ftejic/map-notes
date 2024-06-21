@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { RootState } from "./store";
 
 interface AsyncThunkConfig {
   rejectValue: string;
@@ -164,6 +165,9 @@ export const logOut = createAsyncThunk<null, void, AsyncThunkConfig>(
   }
 );
 
+export const selectUserUID = (state: RootState) => state.auth.user?.uid;
+export const selectToken = (state: RootState) => state.auth.token;
+
 const initialState: AuthState = {
   user: null,
   token: null,
@@ -179,7 +183,6 @@ const authSlice = createSlice({
     builder
       .addCase(createUser.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(
         createUser.fulfilled,
@@ -201,7 +204,6 @@ const authSlice = createSlice({
       )
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(
         loginUser.fulfilled,
@@ -223,7 +225,6 @@ const authSlice = createSlice({
       )
       .addCase(signInWithGoogle.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(
         signInWithGoogle.fulfilled,
@@ -245,7 +246,6 @@ const authSlice = createSlice({
       )
       .addCase(initializeAuth.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(
         initializeAuth.fulfilled,
@@ -270,7 +270,6 @@ const authSlice = createSlice({
       )
       .addCase(logOut.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(logOut.fulfilled, (state) => {
         state.user = null;

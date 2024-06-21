@@ -1,3 +1,4 @@
+import React from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import EditorToolbar from "./toolbar/EditorToolbar";
@@ -7,7 +8,7 @@ interface EditorProps {
   onChange: (value: string) => void;
 }
 
-function Editor({ content, onChange }: EditorProps) {
+const Editor = React.forwardRef(({ content, onChange }: EditorProps, ref: React.Ref<any>) => {
   const editor = useEditor({
     extensions: [StarterKit],
     content: content,
@@ -15,6 +16,22 @@ function Editor({ content, onChange }: EditorProps) {
       onChange(editor.getHTML());
     },
   });
+
+  // Function to reset editor content
+  const resetContent = () => {
+    if (editor) {
+      editor.commands.setContent(content); // Reset content to initial value
+    }
+  };
+
+  // Expose the resetContent function to the parent component
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      resetContent: resetContent
+    }),
+    [editor]
+  );
 
   if (!editor) return <></>;
 
@@ -26,6 +43,6 @@ function Editor({ content, onChange }: EditorProps) {
       </div>
     </div>
   );
-}
+});
 
 export default Editor;

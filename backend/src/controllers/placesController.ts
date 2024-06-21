@@ -3,10 +3,10 @@ import VisitedPlaces from "../models/visitedPlacesModel";
 import Joi from "joi";
 
 const customJoi = Joi.extend((joi) => ({
-  type: 'string',
+  type: "string",
   base: joi.string(),
   messages: {
-    'string.emptyHtml': '{{#label}} should not be empty HTML.',
+    "string.emptyHtml": "{{#label}} should not be empty HTML.",
   },
   rules: {
     emptyHtml: {
@@ -14,7 +14,7 @@ const customJoi = Joi.extend((joi) => ({
         // Remove HTML tags and check if the remaining text is empty
         const text = value.replace(/<\/?[^>]+(>|$)/g, "").trim();
         if (text.length === 0) {
-          return helpers.error('string.emptyHtml');
+          return helpers.error("string.emptyHtml");
         }
         return value;
       },
@@ -37,6 +37,19 @@ const placeSchema = Joi.object({
   notes: customJoi.string().emptyHtml().required(),
   images: Joi.array().items(Joi.string()).optional(),
 });
+
+async function getPlaces(req: Request, res: Response) {
+  const userUID = req.params.userUID;
+
+  try {
+    const places = await VisitedPlaces.find({ userUID });
+
+    return res.status(200).json(places);
+  } catch (error) {
+    console.error("Error occured while getting places:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
 
 async function addPlace(req: Request, res: Response) {
   const { error } = placeSchema.validate(req.body, { abortEarly: false });
@@ -70,11 +83,11 @@ async function addPlace(req: Request, res: Response) {
     });
 
     await newPlace.save();
-    res.status(201).json({ message: "Place added successfully" });
+    res.status(201).json(newPlace);
   } catch (error) {
     console.error("Error occurred while saving place:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 }
 
-export { addPlace };
+export { addPlace, getPlaces };

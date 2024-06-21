@@ -1,19 +1,17 @@
+import { useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { ScrollArea } from "../ui/scroll-area";
-import { useState } from "react";
 import Editor from "../RichText/Editor";
 import AddImages from "./AddImages";
 import Ratings from "./Ratings";
 import Dates from "./Dates";
-import { useToast } from "../ui/use-toast";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import axios from "axios";
-import { firebaseStorage } from "@/firebase/firebase";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Loader2 } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { addPlace } from "@/redux/placesSlice";
+import { toast } from "../ui/use-toast";
 
 function AddPlace() {
   const [placeName, setPlaceName] = useState("");
@@ -31,58 +29,11 @@ function AddPlace() {
     null,
   ]);
   const [uploading, setUploading] = useState(false);
+  const editorRef = useRef<any>(null);
 
-  const { user, token } = useSelector((state: RootState) => state.auth);
+  const dispatch: AppDispatch = useDispatch();
 
-  const { toast } = useToast();
-
-  const uploadImages = async (images: File[]) => {
-    setUploading(true);
-    try {
-      const urls = await Promise.all(
-        images.map(async (image) => {
-          const name = new Date().getTime() + image.name;
-          const storageRef = ref(
-            firebaseStorage,
-            `Places Images/${user?.uid}/${name}`
-          );
-          const uploadTask = uploadBytesResumable(storageRef, image);
-
-          uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-              let progress = Math.round(
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-              );
-              console.log(`Upload is ${progress}% done`);
-
-              switch (snapshot.state) {
-                case "paused":
-                  console.log("Upload is paused");
-                  break;
-                case "running":
-                  console.log("Upload is running");
-                  break;
-              }
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
-
-          await uploadTask;
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          return downloadURL;
-        })
-      );
-
-      return urls;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleAddPlace = async () => {
+  const handleAddPlace = () => {
     if (!placeName || placeName.length === 0) {
       toast({
         variant: "destructive",
@@ -143,51 +94,45 @@ function AddPlace() {
       return;
     }
 
-    const filteredImages: File[] = images.filter(
-      (image): image is File => image !== null
-    );
     const overall = (
       (foodRating + pricesRating + attractionsRating + nightlifeRating) /
       4
     ).toFixed(1);
-    const isoArrivalDate = arrivalDate.toISOString();
-    const isoDepartureDate = departureDate.toISOString();
 
-    try {
-      let imageURLS: string[] | undefined = [];
+    const payload = {
+      placeName,
+      arrivalDate,
+      departureDate,
+      foodRating,
+      pricesRating,
+      attractionsRating,
+      nightlifeRating,
+      notes,
+      images,
+      overall: Number(overall),
+    };
 
-      if (filteredImages.length > 0) {
-        imageURLS = await uploadImages(filteredImages);
+    dispatch(addPlace(payload)).then(() => {
+      setUploading(false);
+      setPlaceName("");
+      setArrivalDate(undefined);
+      setDepartureDate(undefined);
+      setFoodRating(1);
+      setPricesRating(1);
+      setAttractionsRating(1);
+      setNightlifeRating(1);
+      setNotes("");
+      setImages([null, null, null, null]);
+
+      if (editorRef.current) {
+        editorRef.current.resetContent();
       }
 
-      await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/api/places/add-place`,
-        {
-          userUID: user?.uid,
-          placeName,
-          arrivalDate: isoArrivalDate,
-          departureDate: isoDepartureDate,
-          ratings: {
-            food: foodRating,
-            prices: pricesRating,
-            attractions: attractionsRating,
-            nightlife: nightlifeRating,
-            overall,
-          },
-          notes,
-          images: imageURLS,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    } catch (error) {
-      console.error("Failed to add user to database:", error);
-    }
-    setUploading(false);
+      toast({
+        variant: "default",
+        description: "Place added successfully!",
+      });
+    });
   };
 
   return (
@@ -228,7 +173,7 @@ function AddPlace() {
             </div>
             <div className="mt-10">
               <p className="mb-1">Notes</p>
-              <Editor content={notes} onChange={setNotes} />
+              <Editor ref={editorRef} content={notes} onChange={setNotes} />
             </div>
             <div className="mt-10">
               <AddImages images={images} setImages={setImages} />
