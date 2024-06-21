@@ -11,6 +11,7 @@ import VisitedPlaces from "./components/VisitedPlaces/VisitedPlaces";
 import AddPlace from "./components/AddPlace/AddPlace";
 import Settings from "./components/Settings/Settings";
 import RootBoundary from "./components/RootBoundary";
+import { Loader2Icon } from "lucide-react";
 
 const router = createBrowserRouter([
   {
@@ -58,7 +59,11 @@ const App = () => {
   }, []);
 
   if (authLoading) {
-    return <p>Loading</p>;
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <Loader2Icon className="w-10 h-10 animate-spin" />
+      </div>
+    );
   }
 
   return initialized && <RouterProvider router={router} />;

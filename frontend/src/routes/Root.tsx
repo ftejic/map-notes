@@ -5,10 +5,11 @@ import { getPlaces } from "@/redux/placesSlice";
 import { Navigate, Outlet } from "react-router-dom";
 import SideMenu from "@/components/Menus/SideMenu";
 import MobileMenu from "@/components/Menus/MobileMenu";
+import { Loader2Icon } from "lucide-react";
 
 function Root() {
   const dispatch: AppDispatch = useDispatch();
-  const user  = useSelector((state: RootState) => state.auth.user);
+  const user = useSelector((state: RootState) => state.auth.user);
   const placesLoading = useSelector((state: RootState) => state.places.loading);
 
   const [initialized, setInitialized] = useState(false);
@@ -24,7 +25,11 @@ function Root() {
   }
 
   if (placesLoading) {
-    return <p>Loading</p>;
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <Loader2Icon className="w-10 h-10 animate-spin" />
+      </div>
+    );
   }
 
   return (

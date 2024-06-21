@@ -18,7 +18,6 @@ googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 auth.useDeviceLanguage();

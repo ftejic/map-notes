@@ -34,11 +34,13 @@ function AddPlace() {
   const dispatch: AppDispatch = useDispatch();
 
   const handleAddPlace = () => {
+    setUploading(true);
     if (!placeName || placeName.length === 0) {
       toast({
         variant: "destructive",
         description: "Place name is required.",
       });
+      setUploading(false);
       return;
     }
 
@@ -47,6 +49,7 @@ function AddPlace() {
         variant: "destructive",
         description: "Arrival date is required.",
       });
+      setUploading(false);
       return;
     }
 
@@ -55,6 +58,7 @@ function AddPlace() {
         variant: "destructive",
         description: "Deparature date is required.",
       });
+      setUploading(false);
       return;
     }
 
@@ -65,6 +69,7 @@ function AddPlace() {
         variant: "destructive",
         description: "Arrival date should not be in the future.",
       });
+      setUploading(false);
       return;
     }
 
@@ -73,6 +78,7 @@ function AddPlace() {
         variant: "destructive",
         description: "Departure date should not be in the future.",
       });
+      setUploading(false);
       return;
     }
 
@@ -81,6 +87,7 @@ function AddPlace() {
         variant: "destructive",
         description: "Deparature date shold be after arrival date.",
       });
+      setUploading(false);
       return;
     }
 
@@ -91,6 +98,7 @@ function AddPlace() {
         variant: "destructive",
         description: "Notes is required.",
       });
+      setUploading(false);
       return;
     }
 
