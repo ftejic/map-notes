@@ -7,7 +7,7 @@ const PlacesCards = () => {
   const visitedPlaces = useSelector((state: RootState) => state.places.visitedPlaces);
 
   return (
-    <ScrollArea className="h-[calc(100vh-122px-86px)] sm:h-[calc(100vh-120px)] p-4 pb-0">
+    <ScrollArea className="h-[calc(100vh-120px-78px)] sm:h-[calc(100vh-120px)] p-4 pb-0">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-4">
         {visitedPlaces?.map((place) => (
           <PlacesCard

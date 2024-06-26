@@ -20,7 +20,7 @@ function Dates({
   setDepartureDate,
 }: DatesProps) {
   return (
-    <div className="flex flex-col sm:flex-row sm:space-x-4 mt-4">
+    <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
       <div className="sm:w-1/2">
         <Label>Arrival Date</Label>
         <Popover>

@@ -21,7 +21,7 @@ function AddPlace() {
   const [pricesRating, setPricesRating] = useState(1);
   const [attractionsRating, setAttractionsRating] = useState(1);
   const [nightlifeRating, setNightlifeRating] = useState(1);
-  const [notes, setNotes] = useState("");
+  const [notes, setNotes] = useState("<p>Note down your travel stories...</p>");
   const [images, setImages] = useState<(File | null)[]>([
     null,
     null,
@@ -146,10 +146,11 @@ function AddPlace() {
   return (
     <div className="md:grid md:grid-cols-4 lg:grid-cols-5">
       <div className="sm:ml-14 md:ml-0 md:col-start-2 md:col-end-5 lg:col-start-2 lg:col-end-6">
-        <h1 className="text-center text-2xl font-bold p-4">Add Places</h1>
-        <ScrollArea className="h-[calc(100vh-64px-86px)] sm:h-[calc(100vh-64px)]">
+        <h1 className="text-center text-2xl font-bold p-4 border-b-2">Add Places</h1>
+        <ScrollArea className="h-[calc(100vh-66px-78px)] sm:h-[calc(100vh-66px)]">
           <div className="p-4 max-w-screen-md relative left-1/2 -translate-x-1/2">
             <div>
+              <p className="mb-2 font-bold">Place Information</p>
               <Label htmlFor="placeName">Place Name</Label>
               <Input
                 type="text"
@@ -159,7 +160,8 @@ function AddPlace() {
                 onChange={(e) => setPlaceName(e.target.value)}
               />
             </div>
-            <div className="mt-4">
+            <div className="mt-10">
+              <p className="mb-2 font-bold">Dates</p>
               <Dates
                 arrivalDate={arrivalDate}
                 setArrivalDate={setArrivalDate}
@@ -168,6 +170,7 @@ function AddPlace() {
               />
             </div>
             <div className="mt-10">
+              <p className="mb-4 font-bold">Ratings</p>
               <Ratings
                 foodRating={foodRating}
                 setFoodRating={setFoodRating}
@@ -180,10 +183,11 @@ function AddPlace() {
               />
             </div>
             <div className="mt-10">
-              <p className="mb-1">Notes</p>
+              <p className="mb-4 font-bold">Notes</p>
               <Editor ref={editorRef} content={notes} onChange={setNotes} />
             </div>
             <div className="mt-10">
+              <p className="mb-2 font-bold">Images</p>
               <AddImages images={images} setImages={setImages} />
             </div>
             <div className="mt-10">

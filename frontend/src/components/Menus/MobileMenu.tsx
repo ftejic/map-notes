@@ -6,7 +6,7 @@ function MobileMenu() {
   const location = useLocation();
 
   return (
-    <div className="flex sm:hidden absolute w-full bottom-0 border-t-2 bg-background">
+    <div className="flex sm:hidden absolute w-full bottom-0 border-t bg-background text-base">
       <motion.div
         whileTap={{ y: -3 }}
         transition={{ type: "spring", stiffness: 300 }}
@@ -15,10 +15,16 @@ function MobileMenu() {
         <Link to="/" className="w-full flex flex-col items-center pb-4 pt-2">
           <div
             className={`${
-              location.pathname === "/" && "bg-primary"
+              location.pathname === "/" && "bg-primary/20"
             }  py-1 px-3 rounded-md transition-colors duration-200 ease-in-out`}
           >
-            <MapIcon className="text-foreground" />
+            <MapIcon
+              className={`${
+                location.pathname === "/"
+                  ? "text-primary"
+                  : "text-foreground"
+              }  w-5 h-5`}
+            />
           </div>
           <p>Map</p>
         </Link>
@@ -34,10 +40,16 @@ function MobileMenu() {
         >
           <div
             className={`${
-              location.pathname === "/places" && "bg-primary"
+              location.pathname === "/places" && "bg-primary/20"
             }  py-1 px-3 rounded-md transition-colors duration-200 ease-in-out`}
           >
-            <MapPinIcon className="text-foreground" />
+            <MapPinIcon
+              className={`${
+                location.pathname === "/places"
+                  ? "text-primary"
+                  : "text-foreground"
+              } w-5 h-5`}
+            />
           </div>
           <p>Places</p>
         </Link>
@@ -50,10 +62,16 @@ function MobileMenu() {
         <Link to="/add" className="w-full flex flex-col items-center pb-4 pt-2">
           <div
             className={`${
-              location.pathname === "/add" && "bg-primary"
+              location.pathname === "/add" && "bg-primary/20"
             }  py-1 px-3 rounded-md transition-colors duration-200 ease-in-out`}
           >
-            <PencilLineIcon className="text-foreground" />
+            <PencilLineIcon
+              className={`${
+                location.pathname === "/add"
+                  ? "text-primary"
+                  : "text-foreground"
+              } w-5 h-5`}
+            />
           </div>
           <p>Add</p>
         </Link>
@@ -69,10 +87,16 @@ function MobileMenu() {
         >
           <div
             className={`${
-              location.pathname === "/settings" && "bg-primary"
+              location.pathname === "/settings" && "bg-primary/20"
             }  py-1 px-3 rounded-md transition-colors duration-200 ease-in-out`}
           >
-            <Settings className="text-foreground" />
+            <Settings
+              className={`${
+                location.pathname === "/settings"
+                  ? "text-primary"
+                  : "text-foreground"
+              } w-5 h-5`}
+            />
           </div>
           <p>Settings</p>
         </Link>

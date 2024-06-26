@@ -22,16 +22,16 @@ function Ratings({
   setNightlifeRating,
 }: RatingsProps) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-base">
+    <div className="grid grid-cols-1 min-[670px]:grid-cols-2 gap-4 text-base">
       <div className="flex items-center justify-between gap-4 border-2 rounded-md py-2 px-3">
         <p>Food</p>
-        <Rating rating={foodRating} size={35} onRatingChange={setFoodRating} />
+        <Rating rating={foodRating} size={30} onRatingChange={setFoodRating} />
       </div>
       <div className="flex items-center justify-between gap-4 border-2 rounded-md py-2 px-3">
         <p>Prices</p>
         <Rating
           rating={pricesRating}
-          size={35}
+          size={30}
           onRatingChange={setPricesRating}
         />
       </div>
@@ -39,7 +39,7 @@ function Ratings({
         <p>Attractions</p>
         <Rating
           rating={attractionsRating}
-          size={35}
+          size={30}
           onRatingChange={setAttractionsRating}
         />
       </div>
@@ -47,7 +47,7 @@ function Ratings({
         <p>Nightlife</p>
         <Rating
           rating={nightlifeRating}
-          size={35}
+          size={30}
           onRatingChange={setNightlifeRating}
         />
       </div>

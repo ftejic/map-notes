@@ -48,23 +48,20 @@ function AddImages({ images, setImages }: AddImagesProps) {
   };
 
   return (
-    <>
-      <p className="mb-1">Images</p>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {images.map((_, index) => (
-          <div key={index}>
-            <Label>Image {index + 1}</Label>
-            <Input
-              id={`picture${index}`}
-              type="file"
-              accept="image/jpeg, image/png,"
-              value={fileInputs[index] || ""}
-              onChange={(e) => handleFileChange(e, index)}
-            />
-          </div>
-        ))}
-      </div>
-    </>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {images.map((_, index) => (
+        <div key={index}>
+          <Label>Image {index + 1}</Label>
+          <Input
+            id={`picture${index}`}
+            type="file"
+            accept="image/jpeg, image/png,"
+            value={fileInputs[index] || ""}
+            onChange={(e) => handleFileChange(e, index)}
+          />
+        </div>
+      ))}
+    </div>
   );
 }
 

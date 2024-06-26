@@ -5,6 +5,7 @@ import { selectToken } from "@/redux/authSlice";
 import { RootState } from "./store";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { firebaseStorage } from "@/firebase/firebase";
+import imageCompression from "browser-image-compression"; 
 
 interface AsyncThunkConfig {
   rejectValue: string;
@@ -69,6 +70,22 @@ export const getPlaces = createAsyncThunk<
   }
 });
 
+
+const compressImage = async (image: File): Promise<File> => {
+  const options = {
+    maxSizeMB: 1, 
+    maxWidthOrHeight: 1600, 
+    useWebWorker: true, 
+  };
+  try {
+    const compressedImage = await imageCompression(image, options);
+    return compressedImage;
+  } catch (error) {
+    console.error("Error during image compression: ", error);
+    throw error;
+  }
+};
+
 export const uploadImages = createAsyncThunk<
   string[],
   File[],
@@ -78,45 +95,41 @@ export const uploadImages = createAsyncThunk<
   const userUID = selectUserUID(state);
 
   try {
-    const urls = await Promise.all(
-      images.map(async (image) => {
-        const name = new Date().getTime() + image.name;
-        const storageRef = ref(
-          firebaseStorage,
-          `Places Images/${userUID}/${name}`
+    const uploadImage = async (image: File): Promise<string> => {
+      const compressedImage = await compressImage(image); // Kompresujte sliku pre uploadovanja
+      const name = new Date().getTime() + compressedImage.name;
+      const storageRef = ref(firebaseStorage, `Places Images/${userUID}/${name}`);
+      const uploadTask = uploadBytesResumable(storageRef, compressedImage);
+
+      await new Promise<void>((resolve, reject) => {
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            console.log(`Upload is ${progress}% done`);
+          },
+          (error) => {
+            console.error("Upload error: ", error);
+            reject(error);
+          },
+          () => {
+            resolve();
+          }
         );
-        const uploadTask = uploadBytesResumable(storageRef, image);
+      });
 
-        await new Promise<void>((resolve, reject) => {
-          uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-              let progress = Math.round(
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-              );
-              console.log(`Upload is ${progress}% done`);
-            },
-            (error) => {
-              console.log(error);
-              reject(error);
-            },
-            () => {
-              resolve();
-            }
-          );
-        });
+      const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+      return downloadURL;
+    };
 
-        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-        return downloadURL;
-      })
-    );
-
+    const urls = await Promise.all(images.map(uploadImage));
     return urls;
   } catch (error) {
-    console.log(error);
+    console.error("Error uploading images: ", error);
     return rejectWithValue((error as Error).message);
   }
 });
+
 
 export const addPlace = createAsyncThunk<
   VisitedPlace,
