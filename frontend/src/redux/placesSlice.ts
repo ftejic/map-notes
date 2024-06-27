@@ -204,6 +204,30 @@ export const addPlace = createAsyncThunk<
   }
 );
 
+export const deletePlace = createAsyncThunk<string, string, AsyncThunkConfig>(
+  "places/deletePlace",
+  async (placeId, { rejectWithValue, getState }) => {
+    const state = getState() as RootState;
+    const token = selectToken(state);
+
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_SERVER_URL}/api/places/delete-place/${placeId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return placeId;
+    } catch (error) {
+      console.error("Failed to delete place", error);
+      return rejectWithValue((error as Error).message);
+    }
+  }
+);
+
 const initialState: PlacesState = {
   visitedPlaces: null,
   loading: false,
@@ -245,6 +269,18 @@ const placesSlice = createSlice({
         addPlace.rejected,
         (state, action: PayloadAction<string | undefined>) => {
           state.error = action.payload || "Failed to add place";
+        }
+      )
+      .addCase(
+        deletePlace.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.visitedPlaces = (state.visitedPlaces || []).filter(place => place._id !== action.payload);
+        }
+      )
+      .addCase(
+        deletePlace.rejected,
+        (state, action: PayloadAction<string | undefined>) => {
+          state.error = action.payload || "Failed to delete place";
         }
       );
   },

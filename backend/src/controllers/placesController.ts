@@ -107,4 +107,22 @@ async function getPlace(req: Request, res: Response) {
   }
 }
 
-export { addPlace, getPlaces, getPlace };
+async function deletePlace(req: Request, res: Response) {
+  const placeId = req.params.placeId;
+
+  try {
+    const result = await VisitedPlaces.deleteOne({ _id: placeId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Place not found' });
+    }
+
+    return res.status(200).json({ message: 'Place deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting place:', error);
+    return res.status(500).json({ message: 'An error occurred while trying to delete the place. Please try again later.' });
+  }
+
+}
+
+export { addPlace, getPlaces, getPlace, deletePlace };
