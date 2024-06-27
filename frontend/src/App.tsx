@@ -12,6 +12,7 @@ import AddPlace from "./components/AddPlace/AddPlace";
 import Settings from "./components/Settings/Settings";
 import RootBoundary from "./components/RootBoundary";
 import { Loader2Icon } from "lucide-react";
+import Place from "./components/Place/Place";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
         path: "/settings",
         element: <Settings />,
       },
+      {
+        path: "/place/:placeId",
+        element: <Place />
+      }
     ],
     errorElement: <RootBoundary />,
   },
@@ -50,6 +55,7 @@ const router = createBrowserRouter([
 const App = () => {
   const dispatch: AppDispatch = useDispatch();
   const authLoading = useSelector((state: RootState) => state.auth.loading);
+  const token = useSelector((state: RootState) => state.auth.token);
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
@@ -57,6 +63,8 @@ const App = () => {
       setInitialized(true);
     });
   }, []);
+
+  console.log(token);
 
   if (authLoading) {
     return (

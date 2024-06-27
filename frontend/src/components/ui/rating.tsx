@@ -24,6 +24,7 @@ interface RatingsProps extends React.HTMLAttributes<HTMLDivElement> {
   fill?: boolean;
   Icon?: React.ReactElement;
   variant?: keyof typeof ratingVariants;
+  readOnly?: boolean;
   onRatingChange?: (rating: number) => void;
 }
 
@@ -34,6 +35,7 @@ export const Rating = ({
   fill = true,
   Icon = <Star />,
   variant = "default",
+  readOnly = false,
   onRatingChange,
   ...props
 }: RatingsProps) => {
@@ -48,7 +50,7 @@ export const Rating = ({
 
   return (
     <div className={cn("flex w-fit items-center gap-2")} {...props}>
-      <div className="flex items-center cursor-pointer">
+      <div className={`flex items-center ${!readOnly && "cursor-pointer"}`}>
         {[...Array(fullStars)].map((_, i) =>
           React.cloneElement(Icon, {
             key: i,

@@ -22,7 +22,7 @@ function Ratings({
   setNightlifeRating,
 }: RatingsProps) {
   return (
-    <div className="grid grid-cols-1 min-[670px]:grid-cols-2 gap-4 text-base">
+    <div className="grid grid-cols-1 min-[670px]:grid-cols-2 md:grid-cols-1 min-[815px]:grid-cols-2 gap-4 text-base">
       <div className="flex items-center justify-between gap-4 border-2 rounded-md py-2 px-3">
         <p>Food</p>
         <Rating rating={foodRating} size={30} onRatingChange={setFoodRating} />

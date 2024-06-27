@@ -90,4 +90,21 @@ async function addPlace(req: Request, res: Response) {
   }
 }
 
-export { addPlace, getPlaces };
+async function getPlace(req: Request, res: Response) {
+  const placeId = req.params.placeId;
+
+  try {
+    const place = await VisitedPlaces.findById(placeId);
+
+    if (!place) {
+      return res.status(400).send({ message: "No place found" });
+    }
+
+    return res.status(200).json(place);
+  } catch (error) {
+    console.error("Error occured while getting places:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+export { addPlace, getPlaces, getPlace };

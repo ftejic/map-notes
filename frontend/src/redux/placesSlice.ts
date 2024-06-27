@@ -5,7 +5,7 @@ import { selectToken } from "@/redux/authSlice";
 import { RootState } from "./store";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { firebaseStorage } from "@/firebase/firebase";
-import imageCompression from "browser-image-compression"; 
+import imageCompression from "browser-image-compression";
 
 interface AsyncThunkConfig {
   rejectValue: string;
@@ -70,12 +70,11 @@ export const getPlaces = createAsyncThunk<
   }
 });
 
-
 const compressImage = async (image: File): Promise<File> => {
   const options = {
-    maxSizeMB: 1, 
-    maxWidthOrHeight: 1600, 
-    useWebWorker: true, 
+    maxSizeMB: 1,
+    maxWidthOrHeight: 1600,
+    useWebWorker: true,
   };
   try {
     const compressedImage = await imageCompression(image, options);
@@ -98,14 +97,19 @@ export const uploadImages = createAsyncThunk<
     const uploadImage = async (image: File): Promise<string> => {
       const compressedImage = await compressImage(image); // Kompresujte sliku pre uploadovanja
       const name = new Date().getTime() + compressedImage.name;
-      const storageRef = ref(firebaseStorage, `Places Images/${userUID}/${name}`);
+      const storageRef = ref(
+        firebaseStorage,
+        `Places Images/${userUID}/${name}`
+      );
       const uploadTask = uploadBytesResumable(storageRef, compressedImage);
 
       await new Promise<void>((resolve, reject) => {
         uploadTask.on(
           "state_changed",
           (snapshot) => {
-            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            const progress = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
             console.log(`Upload is ${progress}% done`);
           },
           (error) => {
@@ -130,7 +134,6 @@ export const uploadImages = createAsyncThunk<
   }
 });
 
-
 export const addPlace = createAsyncThunk<
   VisitedPlace,
   AddPlacePayload,
@@ -152,7 +155,7 @@ export const addPlace = createAsyncThunk<
       nightlifeRating,
       notes,
       images,
-      overall
+      overall,
     } = payload;
 
     const filteredImages: File[] = images.filter(
@@ -230,9 +233,14 @@ const placesSlice = createSlice({
           state.error = action.payload || "Failed to get places";
         }
       )
-      .addCase(addPlace.fulfilled, (state, action: PayloadAction<VisitedPlace>) => {
-        state.visitedPlaces = state.visitedPlaces ? [...state.visitedPlaces, action.payload] : [action.payload];
-      })
+      .addCase(
+        addPlace.fulfilled,
+        (state, action: PayloadAction<VisitedPlace>) => {
+          state.visitedPlaces = state.visitedPlaces
+            ? [...state.visitedPlaces, action.payload]
+            : [action.payload];
+        }
+      )
       .addCase(
         addPlace.rejected,
         (state, action: PayloadAction<string | undefined>) => {

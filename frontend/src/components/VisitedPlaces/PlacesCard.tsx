@@ -29,7 +29,7 @@ const PlacesCard = ({
   }
 
   return (
-    <Link to={`place/${_id}`}>
+    <Link to={`/place/${_id}`}>
       <Card className="hover:bg-muted transition-colors duration-200 cursor-pointer">
         <CardContent className="p-4 flex justify-between items-center gap-4">
           <div className="flex flex-col gap-2">

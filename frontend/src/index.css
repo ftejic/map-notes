@@ -80,6 +80,10 @@
   padding: 16px;
 }
 
+.Place .tiptap {
+  padding: 0;
+}
+
 .editor ul {
   list-style: circle;
   padding-left: 40px;
