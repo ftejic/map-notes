@@ -33,7 +33,7 @@ function AddPlace() {
 
   const dispatch: AppDispatch = useDispatch();
 
-  const handleAddPlace = () => {
+  const handleAddPlace = async () => {
     setUploading(true);
     if (!placeName || placeName.length === 0) {
       toast({
@@ -120,7 +120,9 @@ function AddPlace() {
       overall: Number(overall),
     };
 
-    dispatch(addPlace(payload)).then(() => {
+    try {
+      await dispatch(addPlace(payload)).unwrap(); // Unwrap the response to handle rejections properly
+  
       setUploading(false);
       setPlaceName("");
       setArrivalDate(undefined);
@@ -129,18 +131,24 @@ function AddPlace() {
       setPricesRating(1);
       setAttractionsRating(1);
       setNightlifeRating(1);
-      setNotes("");
+      setNotes("<p>Note down your travel stories...</p>");
       setImages([null, null, null, null]);
-
+  
       if (editorRef.current) {
-        editorRef.current.resetContent();
+        editorRef.current.setContent("<p>Note down your travel stories...</p>");
       }
-
+  
       toast({
         variant: "default",
         description: "Place added successfully!",
       });
-    });
+    } catch (error) {
+      console.error("Failed to add place", error);
+      toast({
+        variant: "destructive",
+        description: "Failed to add place. Please try again.",
+      });
+    }
   };
 
   return (

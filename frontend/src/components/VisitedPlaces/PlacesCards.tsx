@@ -17,6 +17,7 @@ const PlacesCards = () => {
             arrivalDate={place.arrivalDate}
             departureDate={place.departureDate}
             overall={place.ratings.overall}
+            images={place.images}
           />
         ))}
       </div>

@@ -3,7 +3,12 @@ import axios from "axios";
 import { selectUserUID } from "@/redux/authSlice";
 import { selectToken } from "@/redux/authSlice";
 import { RootState } from "./store";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { firebaseStorage } from "@/firebase/firebase";
 import imageCompression from "browser-image-compression";
 
@@ -44,6 +49,11 @@ interface AddPlacePayload {
   overall: number;
   notes: string;
   images: (File | null)[];
+}
+
+interface DeletePlacePayload {
+  _id: string;
+  images: string[];
 }
 
 export const getPlaces = createAsyncThunk<
@@ -134,6 +144,21 @@ export const uploadImages = createAsyncThunk<
   }
 });
 
+const deleteImages = async (images: string[]) => {
+  try {
+    const deletePromises = images.map(async (image) => {
+      const storageRef = ref(firebaseStorage, image);
+
+      await deleteObject(storageRef);
+    });
+
+    await Promise.all(deletePromises);
+    console.log("All images deleted from Storage.");
+  } catch (error) {
+    console.error("Error deleting images: ", error);
+  }
+};
+
 export const addPlace = createAsyncThunk<
   VisitedPlace,
   AddPlacePayload,
@@ -204,15 +229,21 @@ export const addPlace = createAsyncThunk<
   }
 );
 
-export const deletePlace = createAsyncThunk<string, string, AsyncThunkConfig>(
+export const deletePlace = createAsyncThunk<
+  string,
+  DeletePlacePayload,
+  AsyncThunkConfig
+>(
   "places/deletePlace",
-  async (placeId, { rejectWithValue, getState }) => {
+  async (DeletePlacePayload, { rejectWithValue, getState }) => {
     const state = getState() as RootState;
     const token = selectToken(state);
 
     try {
       await axios.delete(
-        `${import.meta.env.VITE_SERVER_URL}/api/places/delete-place/${placeId}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/places/delete-place/${
+          DeletePlacePayload._id
+        }`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -220,7 +251,9 @@ export const deletePlace = createAsyncThunk<string, string, AsyncThunkConfig>(
         }
       );
 
-      return placeId;
+      await deleteImages(DeletePlacePayload.images);
+
+      return DeletePlacePayload._id;
     } catch (error) {
       console.error("Failed to delete place", error);
       return rejectWithValue((error as Error).message);
@@ -274,7 +307,9 @@ const placesSlice = createSlice({
       .addCase(
         deletePlace.fulfilled,
         (state, action: PayloadAction<string>) => {
-          state.visitedPlaces = (state.visitedPlaces || []).filter(place => place._id !== action.payload);
+          state.visitedPlaces = (state.visitedPlaces || []).filter(
+            (place) => place._id !== action.payload
+          );
         }
       )
       .addCase(

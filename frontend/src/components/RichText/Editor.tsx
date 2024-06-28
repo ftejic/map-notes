@@ -28,7 +28,12 @@ const Editor = React.forwardRef(({ content, onChange }: EditorProps, ref: React.
   React.useImperativeHandle(
     ref,
     () => ({
-      resetContent: resetContent
+      resetContent: resetContent,
+      setContent: (newContent: string) => {
+        if (editor) {
+          editor.chain().setContent(newContent).focus().run();
+        }
+      },
     }),
     [editor]
   );

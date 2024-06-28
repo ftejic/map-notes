@@ -29,6 +29,7 @@ interface PlacesCardProps {
   arrivalDate: Date;
   departureDate: Date;
   overall: number;
+  images: string[];
 }
 
 const PlacesCard = ({
@@ -37,6 +38,7 @@ const PlacesCard = ({
   arrivalDate,
   departureDate,
   overall,
+  images,
 }: PlacesCardProps) => {
   const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
 
@@ -54,7 +56,7 @@ const PlacesCard = ({
   }
 
   const handleDeletePlace = async () => {
-    dispatch(deletePlace(_id))
+    dispatch(deletePlace({ _id, images }))
       .then(() => {
         toast({ description: "Place deleted successfully!" });
       })
@@ -63,8 +65,9 @@ const PlacesCard = ({
           variant: "destructive",
           description: "Place deleted successfully!",
         });
-      }).finally(() => {
-        setDeleteDialogVisible(false)
+      })
+      .finally(() => {
+        setDeleteDialogVisible(false);
       });
   };
 
